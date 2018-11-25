@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person.js'
+import UserOutput from './UserOutput/UserOutput.js'
+import UserInput from './UserInput/UserInput.js'
 
 class App extends Component {
   state = {
@@ -9,6 +11,11 @@ class App extends Component {
       {name: 'Max', age:28},
       {name: 'Manu', age:29},
       {name: 'Stephanie', age:26}
+    ],
+    userOutputs:[
+      {username:'Jessie'},
+      {username:'Mark'},
+      {username:'Van'}
     ]
   }
 
@@ -34,6 +41,26 @@ class App extends Component {
 
   }
 
+  inputChangedHandler = (event) => {
+    this.setState({
+      userOutputs:[
+        {username: event.target.value},
+        {username: event.target.value},
+        {username: event.target.value}
+      ]
+    })
+  }
+
+  inputFocusedHandler = (event) => {
+    this.setState({
+      userOutputs:[
+        {username: ''},
+        {username: ''},
+        {username: ''}
+      ]
+    })
+  }
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -42,6 +69,7 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
 
     return (
        <div className="App">
@@ -59,6 +87,10 @@ class App extends Component {
         <Person 
           name={this.state.persons[2].name} 
           age={this.state.persons[2].age} />
+        <UserOutput username={this.state.userOutputs[0].username} />
+        <UserOutput username={this.state.userOutputs[1].username} />
+        <UserOutput username={this.state.userOutputs[2].username} />
+        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} />
       </div>
     );
     // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, 'I\'m a React App'));
