@@ -4,6 +4,7 @@ import './App.css';
 import Person from './Person/Person.js'
 import UserOutput from './UserOutput/UserOutput.js'
 import UserInput from './UserInput/UserInput.js'
+import Validation from './Validation/Validation.js'
 
 class App extends Component {
   state = {
@@ -17,7 +18,8 @@ class App extends Component {
       {username:'Mark'},
       {username:'Van'}
     ],
-    showPerson: false
+    showPerson: false,
+    userInput: {value:''}
   }
 
   switchNameHandler = (newName) => {
@@ -35,7 +37,7 @@ class App extends Component {
     // const persons = this.state.persons.slice(); //create a copy of the original array
     const persons = [...this.state.persons]
     persons.splice(personIndex, 1);
-    this.setState({
+   this.setState({
       persons:persons
     })
   }
@@ -60,7 +62,8 @@ class App extends Component {
         {username: event.target.value},
         {username: event.target.value},
         {username: event.target.value}
-      ]
+      ],
+      userInput: {value:event.target.value}
     })
   }
 
@@ -113,7 +116,9 @@ class App extends Component {
         <UserOutput username={this.state.userOutputs[0].username} />
         <UserOutput username={this.state.userOutputs[1].username} />
         <UserOutput username={this.state.userOutputs[2].username} />
-        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} />
+        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput.value}/>
+
+        <Validation length={this.state.userInput.value.length} />
       </div>
     );
     // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, 'I\'m a React App'));
