@@ -5,6 +5,7 @@ import Person from './Person/Person.js'
 import UserOutput from './UserOutput/UserOutput.js'
 import UserInput from './UserInput/UserInput.js'
 import Validation from './Validation/Validation.js'
+import Char from './Char/Char.js'
 
 class App extends Component {
   state = {
@@ -76,12 +77,23 @@ class App extends Component {
       ]
     })
   }
+  
+  deleteCharHandler = (index) => {
+    const letters = this.state.userInput.value.split('');
+    letters.splice(index, 1);
+    const newLetters = letters.join('');
+    this.setState({
+      userInput:{value: newLetters}
+    });
+  }
 
   toggleNameHandler = () => {
     const doesShow = this.state.showPerson;
     this.setState({showPerson: !doesShow});
   }
+
   render() {
+
     const style = {
       backgroundColor: 'white',
       font: 'inherit',
@@ -107,6 +119,25 @@ class App extends Component {
       );
     }
 
+
+    let chars = null;
+    if (this.state.userInput.value != null){
+      const letters = this.state.userInput.value.split('')
+      chars = (
+        <div>
+          {
+            letters.map((letter, index) => {
+              return <Char value={letter} 
+              key={index} 
+              click={() => this.deleteCharHandler(index)} />
+            })
+          }
+        </div>
+      );
+    }
+
+    console.log(this.state.userInput.value);
+
     return (
        <div className="App">
         <h1>I'm a react APP</h1>
@@ -119,6 +150,7 @@ class App extends Component {
         <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput.value}/>
 
         <Validation length={this.state.userInput.value.length} />
+        {chars}
       </div>
     );
     // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, 'I\'m a React App'));
