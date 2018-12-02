@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person.js'
 import UserOutput from './UserOutput/UserOutput.js'
 import UserInput from './UserInput/UserInput.js'
@@ -93,18 +93,8 @@ class App extends Component {
   }
 
   render() {
-
-    const style = {
-      backgroundColor: 'green',
-      color: "white",
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-    };
-
-
     let persons = null;
+    let btnClass = '';
     if (this.state.showPerson){
       persons = (
         <div>
@@ -118,16 +108,16 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor= "red";
+      btnClass = classes.Red
     }
 
-    let classes = [];
+    let assignedClasses = [];
     if(this.state.persons.length <=2){
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
 
     if(this.state.persons.length<=1){
-      classes.push('bold');
+      assignedClasses.push( classes.bold);
     }
 
 
@@ -152,9 +142,9 @@ class App extends Component {
     console.log(this.state.userInput.value);
 
     return (
-        <div className="App">
-          <p className={classes.join(' ')}>I'm a react APP</p>
-          <button style={style}
+        <div className={classes.App}>
+          <p className={assignedClasses.join(' ')}>I'm a react APP</p>
+          <button className={btnClass}
             onClick={this.toggleNameHandler}>Toggle Name</button>
           {persons}
           <UserOutput username={this.state.userOutputs[0].username} />
