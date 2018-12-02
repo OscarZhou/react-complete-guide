@@ -1,21 +1,21 @@
 import React from "react"
 
 const validation = (props) => {
-    var tip = '';
+    var validationMessage = '';
     const length = props.length
     if (length < 5)
     {
-        tip = 'Text too short';
+        validationMessage = 'Text too short';
     }
     
     if(length > 20)
     {
-        tip = 'Text long enough';
+        validationMessage = 'Text long enough';
     }
     return (
         <div>
             <p>{props.length}</p>
-            <p>{tip}</p>
+            <p>{validationMessage }</p>
         </div>
     )
 }

@@ -20,7 +20,7 @@ class App extends Component {
       {username:'Van'}
     ],
     showPerson: false,
-    userInput: {value:''}
+    userInput: ''
   }
 
   switchNameHandler = (newName) => {
@@ -64,7 +64,7 @@ class App extends Component {
         {username: event.target.value},
         {username: event.target.value}
       ],
-      userInput: {value:event.target.value}
+      userInput:event.target.value
     })
   }
 
@@ -79,11 +79,11 @@ class App extends Component {
   }
   
   deleteCharHandler = (index) => {
-    const letters = this.state.userInput.value.split('');
+    const letters = this.state.userInput.split('');
     letters.splice(index, 1);
-    const newLetters = letters.join('');
+    const updatedLetters = letters.join('');
     this.setState({
-      userInput:{value: newLetters}
+      userInput: updatedLetters
     });
   }
 
@@ -121,15 +121,15 @@ class App extends Component {
 
 
     let chars = null;
-    if (this.state.userInput.value != null){
-      const letters = this.state.userInput.value.split('')
+    if (this.state.userInput != null){
+      const letters = this.state.userInput.split('')
       chars = (
         <div>
           {
             letters.map((letter, index) => {
               return <Char value={letter} 
               key={index} 
-              click={() => this.deleteCharHandler(index)} />
+              clicked={() => this.deleteCharHandler(index)} />
             })
           }
         </div>
@@ -147,9 +147,9 @@ class App extends Component {
         <UserOutput username={this.state.userOutputs[0].username} />
         <UserOutput username={this.state.userOutputs[1].username} />
         <UserOutput username={this.state.userOutputs[2].username} />
-        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput.value}/>
+        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput}/>
 
-        <Validation length={this.state.userInput.value.length} />
+        <Validation length={this.state.userInput.length} />
         {chars}
       </div>
     );

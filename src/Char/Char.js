@@ -9,7 +9,7 @@ const char = (props) =>{
         border:"1px solid black"
     }
     return (
-        <p style={style} key={props.id} onClick={props.click}>{props.value}</p>
+        <p style={style} key={props.id} onClick={props.clicked}>{props.value}</p>
     )
 }
 
