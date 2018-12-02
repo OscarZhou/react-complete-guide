@@ -5,6 +5,7 @@ import Person from './Person/Person.js'
 import UserOutput from './UserOutput/UserOutput.js'
 import UserInput from './UserInput/UserInput.js'
 import Validation from './Validation/Validation.js'
+import Radium, {StyleRoot}from 'radium'
 import Char from './Char/Char.js'
 
 class App extends Component {
@@ -95,11 +96,16 @@ class App extends Component {
   render() {
 
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: "white",
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover':{
+        backgroundColor: 'lightgreen',
+        color:'black'
+      }
     };
 
 
@@ -117,6 +123,20 @@ class App extends Component {
           })}
         </div>
       );
+      style.backgroundColor= "red";
+      style[":hover"] = {
+        backgroundColor: 'salmon',
+        color:'black'
+      }
+    }
+
+    let classes = [];
+    if(this.state.persons.length <=2){
+      classes.push('red');
+    }
+
+    if(this.state.persons.length<=1){
+      classes.push('bold');
     }
 
 
@@ -136,25 +156,29 @@ class App extends Component {
       );
     }
 
+
+
     console.log(this.state.userInput.value);
 
     return (
-       <div className="App">
-        <h1>I'm a react APP</h1>
-        <button style={style} 
-          onClick={this.toggleNameHandler}>Toggle Name</button>
-        {persons}
-        <UserOutput username={this.state.userOutputs[0].username} />
-        <UserOutput username={this.state.userOutputs[1].username} />
-        <UserOutput username={this.state.userOutputs[2].username} />
-        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput}/>
+      <StyleRoot>
+        <div className="App">
+          <p className={classes.join(' ')}>I'm a react APP</p>
+          <button style={style}
+            onClick={this.toggleNameHandler}>Toggle Name</button>
+          {persons}
+          <UserOutput username={this.state.userOutputs[0].username} />
+          <UserOutput username={this.state.userOutputs[1].username} />
+          <UserOutput username={this.state.userOutputs[2].username} />
+          <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput} />
 
-        <Validation length={this.state.userInput.length} />
+          <Validation length={this.state.userInput.length} />
         {chars}
-      </div>
+        </div>
+      </StyleRoot>
     );
     // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, 'I\'m a React App'));
   }
 }
 
-export default App;
+export default Radium(App);
