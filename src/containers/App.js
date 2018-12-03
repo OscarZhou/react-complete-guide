@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import classes from './App.css';
-import Person from './Person/Person.js'
-import UserOutput from './UserOutput/UserOutput.js'
-import UserInput from './UserInput/UserInput.js'
-import Validation from './Validation/Validation.js'
-import Char from './Char/Char.js'
+import Persons from '../components/Persons/Persons.js'
+import UserOutput from '../components/UserOutput/UserOutput.js'
+import UserInput from '../components/UserInput/UserInput.js'
+import Validation from '../components/Validation/Validation.js'
+import Chars from '../components/Chars/Chars.js'
+import Cockpit from '../components/Cockpit/Cockpit.js'
 
 class App extends Component {
   state = {
@@ -94,47 +94,21 @@ class App extends Component {
 
   render() {
     let persons = null;
-    let btnClass = '';
     if (this.state.showPerson){
-      persons = (
-        <div>
-          {this.state.persons.map((person, index) => {
-            return <Person 
-              click={() => this.deletePersonHandler(index)}
-                name={person.name} 
-                age={person.age}
-                key={person.id}
-                changed={(event) => this.nameChangedHandler(event, person.id)}></Person>
-          })}
-        </div>
-      );
-      btnClass = classes.Red
+      persons =  <Persons 
+        persons={this.state.persons} 
+        clicked={this.deletePersonHandler} 
+        changed={this.nameChangedHandler} />;
     }
 
-    let assignedClasses = [];
-    if(this.state.persons.length <=2){
-      assignedClasses.push(classes.red);
-    }
-
-    if(this.state.persons.length<=1){
-      assignedClasses.push( classes.bold);
-    }
 
 
     let chars = null;
     if (this.state.userInput != null){
       const letters = this.state.userInput.split('')
-      chars = (
-        <div>
-          {
-            letters.map((letter, index) => {
-              return <Char value={letter} 
-              key={index} 
-              clicked={() => this.deleteCharHandler(index)} />
-            })
-          }
-        </div>
-      );
+      chars = <Chars
+              chars={letters} 
+              clicked={this.deleteCharHandler} />;
     }
 
 
@@ -142,19 +116,19 @@ class App extends Component {
     console.log(this.state.userInput.value);
 
     return (
-        <div className={classes.App}>
-          <p className={assignedClasses.join(' ')}>I'm a react APP</p>
-          <button className={btnClass}
-            onClick={this.toggleNameHandler}>Toggle Name</button>
-          {persons}
-          <UserOutput username={this.state.userOutputs[0].username} />
-          <UserOutput username={this.state.userOutputs[1].username} />
-          <UserOutput username={this.state.userOutputs[2].username} />
-          <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput} />
-
-          <Validation length={this.state.userInput.length} />
+      <div className={classes.App}>
+        <Cockpit 
+          showPerson={this.state.showPerson} 
+          length={this.state.persons.length}
+          clicked={this.toggleNameHandler} />
+        {persons}
+        <UserOutput username={this.state.userOutputs[0].username} />
+        <UserOutput username={this.state.userOutputs[1].username} />
+        <UserOutput username={this.state.userOutputs[2].username} />
+        <UserInput changed={this.inputChangedHandler} focused={this.inputFocusedHandler} value={this.state.userInput} />
+        <Validation length={this.state.userInput.length} />
         {chars}
-        </div>
+      </div>
     );
     // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, 'I\'m a React App'));
   }
